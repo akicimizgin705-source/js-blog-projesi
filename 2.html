@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hava Durumu Uygulaması</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#4facfe,#00f2fe);
+}
+
+.container{
+    width:400px;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+    text-align:center;
+}
+
+h1{
+    color:#333;
+    margin-bottom:20px;
+}
+
+.search{
+    display:flex;
+    gap:10px;
+}
+
+.search input{
+    flex:1;
+    padding:12px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    outline:none;
+}
+
+.search button{
+    padding:12px 20px;
+    border:none;
+    border-radius:10px;
+    background:#2196f3;
+    color:white;
+    cursor:pointer;
+}
+
+.search button:hover{
+    background:#1976d2;
+}
+
+.weather{
+    margin-top:25px;
+    display:none;
+}
+
+.weather img{
+    width:120px;
+}
+
+.temp{
+    font-size:45px;
+    font-weight:bold;
+    margin:10px 0;
+}
+
+.city{
+    font-size:28px;
+    color:#333;
+}
+
+.desc{
+    color:#666;
+    margin:10px 0;
+    text-transform:capitalize;
+}
+
+.details{
+    display:flex;
+    justify-content:space-around;
+    margin-top:20px;
+}
+
+.card{
+    padding:10px;
+}
+
+.error{
+    margin-top:20px;
+    color:red;
+    display:none;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🌦 Hava Durumu</h1>
+
+    <div class="search">
+        <input type="text" id="cityInput" placeholder="Şehir giriniz">
+        <button onclick="getWeather()">Ara</button>
+    </div>
+
+    <div class="error" id="error">
+        Şehir bulunamadı!
+    </div>
+
+    <div class="weather" id="weather">
+
+        <img id="icon">
+
+        <div class="temp" id="temp">0°C</div>
+
+        <div class="city" id="city">İstanbul</div>
+
+        <div class="desc" id="desc">
+            Açık Hava
+        </div>
+
+        <div class="details">
+            <div class="card">
+                <h3 id="humidity">%0</h3>
+                <p>Nem</p>
+            </div>
+
+            <div class="card">
+                <h3 id="wind">0 km/s</h3>
+                <p>Rüzgar</p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const API_KEY = "0efd48fa4097b0983e3bc3a3e439bc5f";
+
+async function getWeather(){
+
+    const city = document.getElementById("cityInput").value.trim();
+
+    if(city==="") return;
+
+    const url =
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=tr`;
+
+    try{
+
+        const response = await fetch(url);
+
+        if(!response.ok){
+            throw new Error("Şehir bulunamadı");
+        }
+
+        const data = await response.json();
+
+        document.getElementById("weather").style.display = "block";
+        document.getElementById("error").style.display = "none";
+
+        document.getElementById("city").innerText =
+        data.name;
+
+        document.getElementById("temp").innerText =
+        Math.round(data.main.temp) + "°C";
+
+        document.getElementById("desc").innerText =
+        data.weather[0].description;
+
+        document.getElementById("humidity").innerText =
+        "%" + data.main.humidity;
+
+        document.getElementById("wind").innerText =
+        data.wind.speed + " km/s";
+
+        document.getElementById("icon").src =
+        `https://openweathermap.org/img/wn/${data
+        </script>
+</body>
+</html>
