@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Spotify Clone</title>
+
+<style>
+    .cover{
+width:180px;
+height:180px;
+border-radius:50%;
+animation:rotate 10s linear infinite;
+animation-play-state:paused;
+}
+
+.cover.playing{
+animation-play-state:running;
+}
+
+@keyframes rotate{
+from{
+transform:rotate(0deg);
+}
+to{
+transform:rotate(360deg);
+}
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#121212;
+    color:white;
+    display:flex;
+    height:100vh;
+}
+
+.sidebar{
+    width:250px;
+    background:#000;
+    padding:20px;
+}
+
+.logo{
+    color:#1DB954;
+    font-size:32px;
+    font-weight:bold;
+    margin-bottom:30px;
+}
+
+.menu ul{
+    list-style:none;
+}
+
+.menu li{
+    padding:15px 0;
+    cursor:pointer;
+}
+
+.menu li:hover{
+    color:#1DB954;
+}
+
+.main{
+    flex:1;
+    padding:20px;
+    overflow:auto;
+}
+
+.search{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:20px;
+    margin-bottom:20px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:#181818;
+    padding:15px;
+    border-radius:10px;
+    transition:.3s;
+    cursor:pointer;
+}
+
+.card:hover{
+    background:#282828;
+    transform:scale(1.03);
+}
+
+.card img{
+    width:100%;
+    border-radius:10px;
+}
+
+.card h3{
+    margin-top:10px;
+}
+
+.song-list{
+    margin-top:40px;
+}
+
+.song{
+    display:flex;
+    justify-content:space-between;
+    padding:15px;
+    margin-top:10px;
+    background:#1e1e1e;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.song:hover{
+    background:#333;
+}
+
+.player{
+    position:fixed;
+    bottom:0;
+    left:250px;
+    right:0;
+    background:#181818;
+    padding:15px;
+}
+
+.controls{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+}
+
+button{
+    padding:10px 15px;
+    border:none;
+    border-radius:50px;
+    cursor:pointer;
+}
+
+.play{
+    background:#1DB954;
+    color:white;
+}
+
+.progress{
+    width:100%;
+    margin-top:10px;
+}
+
+.info{
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.volume{
+    width:150px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+
+<div class="logo">
+Spotify
+</div>
+
+<div class="menu">
+<ul>
+<li>🏠 Ana Sayfa</li>
+<li>🔍 Ara</li>
+<li>📚 Kitaplığın</li>
+<li>❤️ Beğendiklerim</li>
+</ul>
+</div>
+
+</div>
+
+<div class="main">
+
+<input
+type="text"
+id="searchInput"
+class="search"
+placeholder="Şarkı Ara..."
+>
+
+<h2>Popüler Albümler</h2>
+
+<div class="cards">
+
+<div class="card">
+https://picsum.photos/200?1
+<h3>Rock Hits</h3>
+<p>En iyi rock şarkıları</p>
+</div>
+
+<div class="card">
+https://picsum.photos/200?2
+<h3>Chill Mood</h3>
+<p>Rahatlatıcı müzikler</p>
+</div>
+
+<div class="card">
+https://picsum.photos/200?3
+<h3>Türkçe Pop</h3>
+<p>En sevilen parçalar</p>
+</div>
+
+<div class="card">
+https://picsum.photos/200?4
+<h3>Jazz</h3>
+<p>Yumuşak melodiler</p>
+</div>
+
+</div>
+
+<div class="song-list" id="songList">
+
+</div>
+
+</div>
+
+<div class="player">
+
+<div class="info">
+<span id="songTitle">
+Şarkı Seçilmedi
+</span>
+</div>
+
+<div class="controls">
+<button onclick="prevSong()">⏮</button>
+
+<button
+class="play"
+onclick="playPause()"
+id="playBtn">
+▶
+</button>
+
+<button onclick="nextSong()">⏭</button>
+
+<input
+class="volume"
+type="range"
+min="0"
+max="100"
+value="100"
+id="volumeSlider"
+>
+</div>
+
+<input
+class="progress"
+id="progress"
+type="range"
+min="0"
+max="100"
+value="0"
+>
+
+</div>
+
+<script>
+    audio.play();
+
+cover.classList.add("playing");
+
+audio.pause();
+
+cover.classList.remove("playing");
+
+audio.addEventListener(
+"timeupdate",
+()=>{
+
+const progressPercent =
+
+(audio.currentTime /
+audio.duration) * 100;
+
+progress.value =
+progressPercent;
+
+});
+
+progress.addEventListener(
+"input",
+()=>{
+
+audio.currentTime =
+
+(progress.value / 100)
+*
+audio.duration;
+
+});
+
+audio.addEventListener(
+"timeupdate",
+()=>{
+
+current.textContent =
+formatTime(
+audio.currentTime
+);
+
+duration.textContent =
+formatTime(
+audio.duration
+);
+
+});
+
+function formatTime(time){
+
+const min =
+Math.floor(time/60);
+
+const sec =
+Math.floor(time%60);
+
+return `${min}:${
+sec < 10 ? "0"+sec : sec
+}`;
+}
+
+let favorites =
+JSON.parse(
+localStorage.getItem("favorites")
+) || [];
+
+function addFavorite(song){
+
+favorites.push(song);
+
+saveFavorites();
+
+renderFavorites();
+}
+
+function saveFavorites(){
+
+localStorage.setItem(
+"favorites",
+JSON.stringify(favorites)
+);
+
+}
+
+    function loadSong(index){
+
+audio.src = songs[index].src;
+
+songTitle.textContent =
+songs[index].title;
+
+artist.textContent =
+songs[index].artist;
+
+cover.src =
+songs[index].cover;
+}
+const audio = new Audio();
+const songs = [
+{
+title:"Suç ve Ceza Theme",
+artist:"Dostoyevski",
+cover:"covers/cover1.jpg",
+src:"songs/song1.mp3"
+},
+{
+title:"Kumarbaz Blues",
+artist:"Dostoyevski",
+cover:"covers/cover2.jpg",
+src:"songs/song2.mp3"
+},
+{
+title:"Anna Karenina",
+artist:"Tolstoy",
+cover:"covers/cover3.jpg",
+src:"songs/song3.mp3"
+},
+{
+title:"Dönüşüm",
+artist:"Kafka",
+cover:"covers/cover4.jpg",
+src:"songs/song4.mp3"
+},
+{
+title:"İstanbul Hatırası",
+artist:"Tanpınar",
+cover:"covers/cover5.jpg",
+src:"songs/song5.mp3"
+},
+{
+title:"Masumiyet",
+artist:"Sabahattin Ali",
+cover:"covers/cover6.jpg",
+src:"songs/song6.mp3"
+}
+];
+
+const songList =
+document.getElementById("songList");
+
+const searchInput =
+document.getElementById("searchInput");
+
+const songTitle =
+document.getElementById("songTitle");
+
+const playBtn =
+document.getElementById("playBtn");
+
+const progress =
+document.getElementById("progress");
+
+let currentSong = 0;
+let playing = false;
+
+function renderSongs(list){
+
+songList.innerHTML="";
+
+list.forEach((song,index)=>{
+
+const div =
+document.createElement("div");
+
+div.classList.add("song");
+
+div.innerHTML=`
+<div>
+<strong>${song.title}</strong><br>
+<small>${song.artist}</small>
+</div>
+<button onclick="selectSong(${index})">
+Oynat
+</button>
+`;
+
+songList.appendChild(div);
+
+});
+
+}
+
+function selectSong(index){
+
+currentSong=index;
+
+songTitle.textContent=
+songs[index].title;
+
+playing=true;
+
+playBtn.textContent="⏸";
+
+simulateProgress();
+
+}
+
+function playPause(){
+
+if(!songs.length)return;
+
+playing=!playing;
+
+playBtn.textContent=
+playing ? "⏸" : "▶";
+
+if(playing){
+simulateProgress();
+}
+
+}
+
+function nextSong(){
+
+currentSong++;
+
+if(currentSong>=songs.length){
+currentSong=0;
+}
+
+selectSong(currentSong);
+
+}
+
+function prevSong(){
+
+currentSong--;
+
+if(currentSong<0){
+currentSong=songs.length-1;
+}
+
+selectSong(currentSong);
+
+}
+
+let timer;
+
+function simulateProgress(){
+
+clearInterval(timer);
+
+timer=setInterval(()=>{
+
+if(playing){
+
+progress.value++;
+
+if(progress.value>=100){
+
+progress.value=0;
+
+nextSong();
+}
+
+}
+
+},300);
+
+}
+
+searchInput.addEventListener("keyup",()=>{
+
+const value =
+searchInput.value.toLowerCase();
+
+const filtered =
+songs.filter(song =>
+song.title.toLowerCase().includes(value)
+);
+
+renderSongs(filtered);
+
+});
+
+document
+.getElementById("volumeSlider")
+.addEventListener("input",(e)=>{
+
+console.log(
+"Ses:",
+e.target.value
+);
+
+});
+
+renderSongs(songs);
+
+</script>
+
+</body>
+</html>
