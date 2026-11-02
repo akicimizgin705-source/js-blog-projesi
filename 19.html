@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM Örneği</title>
+</head>
+<body>
+    
+    <h1 id="baslik"> Merhaba Dünya!</h2>
+        <button id="btn">Yazıyı Değiştir</button>
+    <script>
+     const baslik = document.getElementById("baslik");
+     const button = document.getElementById("btn");
+     
+     button.addEventListener("click",function(){
+        baslik.innerText = "DOM ile Yazı Değiştirildi";
+        baslik.style.color = "blue";
+     });
+    </script>
+</body>
+</html>

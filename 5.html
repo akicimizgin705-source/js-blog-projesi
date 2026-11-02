@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <body>
+        <input type="text" id="renk" placeholder="Renk girin(kırmızı,mavi,yeşil)">
+        <button onclick="renklendir()">Renklendir</button>
+
+        <p id="metin">Merhaba Dünya</p>
+
+        <script>
+            function renklendir(){
+                let renn = document.getElementById("renk").value.toLowerCase();
+                let metin = document.getElementById("metin");
+
+                switch (renk){
+                    case "kırmızı":
+                        metin.style.color="red";
+                        break;
+
+                        case "mavi":
+                        metin.style.color="blue";
+                        break;
+
+                        case "yeşil":
+                        metin.style.color="green";
+                        break;
+
+                        case "sarı":
+                        metin.style.color="yellow";
+                        break;
+
+                        default:
+                            alert("Geçersiz renk girdiniz!");
+                }
+            }
+        </script>
+    </body>
+</html>

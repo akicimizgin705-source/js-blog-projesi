@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>js OOP Örneği</title>
+</head>
+<body>
+    
+    <h2 id="mesaj"></h2>
+    <script>
+        class Insan{
+            constructor(ad,yas){
+                this.ad = ad;
+                this.yas = yas;
+            }
+            selamVer(){
+                return'Merhaba ,ben${this.ad}(${this.yas}yaşında).';
+            }
+        }
+        const kisi1= new Insan("Nisa",19);
+
+        document.getElementById("mesaj").innerText = kisi1.selamVer();
+    </script>
+</body>
+</html>

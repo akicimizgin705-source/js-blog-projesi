@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="device-width,initial-scale=1.0">
+        <title>Diziyi Dolaşma</title>
+    </head>
+    <body>
+        <h1>
+            Dizideki Elemanlar
+        </h1>
+        <p id="sonuc"> </p>
+        <script>
+            let meyveler = ["Elma","Çilek","Kivi","Ejder meyvesi","Mango"];
+               let metin="";
+            for(let i =0;i< meyveler.length;i++){
+                metin += meyveler[i]+"<br>";
+            }
+            document.getElementById("sonuc").innerHTML = metin;
+            
+        </script>
+    </body>
+</html>

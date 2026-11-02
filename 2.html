@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="device-width,initial-scale=1.0">
+        <title>Saat Bilgisi</title>
+
+    </head>
+    <body>
+        <h2>Bilgisyarın Saat Bilgisi</h2>
+        <p id="sonuc"></p>
+        <script>
+            let zaman =new Date();
+            let saat = zaman.getHours();
+
+            if(saat>=6 && saat<12){
+                document.getElementById("sonuc").innerHTML= "Günaydın! Saat: " + saat;
+            }
+            else if(saat>=12 && saat<18){
+              document.getElementById("sonuc").innerHTML= "İyi günler! Saat: " + saat;
+            }
+            else if(saat>=18 && saat<22){
+                document.getElementById("sonuc").innerHTML= "İyi akşamlar! Saat: " + saat;
+            }
+            else{
+                ocument.getElementById("sonuc").innerHTML= "İyi geceler! Saat: " + saat;
+            }
+
+        </script>
+    </body>
+</html>

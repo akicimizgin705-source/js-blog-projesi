@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>js OOP Örneği</title>
+</head>
+<body>
+    <h2>javascript opp örneği</h2>
+    <div id="cikti"></div>
+    <script>
+        class Araba{
+            #kilometre=0;
+
+            constructor(marka,model){
+                this.marka= marka;
+                this.model=model;
+            
+            bilgi(){
+               return'${this.marka}${this.model}';
+            }
+            sur(km){
+                this.#kilometre +=km;
+                return '${km} km gidildi.Toplam: ${this.#kilometre} km';
+            }
+        }
+        class ElektirikliAraba extends Araba{
+            sarjEt(){
+                return '${this.bilgi()} şarj oluyor...';
+            }
+        }
+
+           const klasik = new Araba("Toyota","Corolla");
+           const tesla = new ElektirikliAraba("Tesla","Model 3");
+
+           document.getElementById("cikti").innerHTML= '
+           <p><b>Klasik:</b> ${klasik.bilgi()} - ${klasik.sur(50)} </p>
+           <p><b>Elektirikli:</b>${tesla.sarjEt()} </p>';
+    </script>
+</body>
+</html>

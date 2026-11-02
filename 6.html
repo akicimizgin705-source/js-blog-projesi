@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="device-width,initial-scale=1.0">
+        <title>Sayıların toplamı</title>
+    </head>
+    <body>
+        <h1>
+            1'den 50'ye kadar olan sayıların toplamı
+        </h1>
+        <p id="sonuc"> </p>
+        <script>
+            let toplam = 0;
+
+            for(let i =1;i<=50;i++){
+                toplam =toplam+i;
+            }
+            document.getElementById("sonuc").innerHTML =
+            "1'den 50'ye kadar sayıların toplamı:" + toplam;
+        </script>
+    </body>
+</html>

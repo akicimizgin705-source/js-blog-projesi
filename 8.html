@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title> Nesneleri Dolaşma</title>
+</head>
+<body>
+    <h2>Kişi Bilgileri</h2>
+    <p id="sonuc"></p>
+    <script>
+        let kisi = {
+            ad:"Kemal",
+            yas:61,
+            telefon:"05563246972"
+        };
+
+        let metin="";
+        for (let anahtar in kisi){
+            metin+= anahtar +":" + kisi[anahtar]+"<br>";
+
+        }
+        document.getElementById("sonuc").innerHTML= metin;
+    </script>
+</body>
+</html>

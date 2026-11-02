@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title> Faktöriyel Hesaplama</title>
+   
+</head>
+<body>
+
+    <h2>Faktöriyel Hesaplama Programı </h2>
+
+
+     <label for="sayi">Bir sayı giriniz:</label>
+     <input type="number" id="sayi" min="0">
+
+     <button onclick="faktöriyelhasapla()">Hesapla
+
+     </button>
+    <p id="sonuc"></p>
+    <script>
+function faktöriyelhasapla(){
+    let sayi = Number(document.getElementById("sayi").value);
+
+    if(document.getElementById("sayi").value ==="" || 
+!Number.isInteger(sayi)|| sayi < 0){
+    document.getElementById("sonuc").innerHTML = "Lütfen sıfır veya pozitif bir tam sayı giriniz:";
+    return;
+}
+document.getElementById("sonuc").innerHTML= sayi + "!=" + faktoriyel
+;
+}
+       
+        
+    </script>
+</body>
+</html>
